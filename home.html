@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quotes</title>
+</head>
+<body>
+    <div id="quotes"></div>
+    <div id="author"></div>
+    <button id='btt'>New Quotes</button>
+
+    <script>
+        const quotes=document.getElementById('quotes')
+        const author=document.getElementById('author')
+        const btt=document.getElementById('btt')
+        let real_data="";
+        const generateQuotes=()=>{
+            let rnum=Math.floor(Math.random(0,1600)*1000)
+            // console.log(real_data[rnum].author)
+            if (real_data[rnum].author==null){
+                author.innerHTML='Unknown'
+            }
+            else{
+
+                author.innerHTML=(`${real_data[rnum].author}`)
+            }
+
+
+            quotes.innerHTML=(`${real_data[rnum].text}`)
+            
+        }
+        const getQuotes=async()=>{
+            const api="https://type.fit/api/quotes";
+            try{
+                let data=await fetch(api)
+                real_data=await data.json()
+                // console.log(real_data[0])
+        
+                generateQuotes();
+            }
+            catch (error){
+            }
+        }
+        btt.addEventListener('click',generateQuotes)
+        getQuotes();
+    
+    </script>
+
+
+<style>
+    body{
+        background: black;
+        color: blanchedalmond;
+    }
+    #quotes{
+        font-size:35px;
+        margin-top:100px ;
+        margin-left: 100px;
+        padding: 20px;
+    }
+    #author{
+        font-size:35px;
+        margin-top:100px ;
+        margin-left: 1000px;
+        padding: 20px;
+    }
+    #btn{
+        position: relative;
+        margin-left: 100px;
+    }
+
+</style>
+</body>
+</html>
